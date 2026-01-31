@@ -11,6 +11,9 @@ public class SurferController : MonoBehaviour
     [SerializeField] private float jumpForce = 12f;
     [SerializeField] private float jumpHoldForce = 20f;
     [SerializeField] private float maxJumpHoldTime = 0.2f;
+    [SerializeField] private float fallMultiplier = 2.5f;
+    [SerializeField] private float lowJumpMultiplier = 2f;
+
 
     private float jumpHoldTimer;
     private bool isJumping;
@@ -18,6 +21,8 @@ public class SurferController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private bool jumpPressed;
+    private bool jumpHeld;
+
 
     void Awake()
     {
@@ -29,6 +34,7 @@ public class SurferController : MonoBehaviour
         CheckGround();
         HandleMovement();
         HandleJump();
+        ApplyBetterJumpPhysics();
 
     }
 
@@ -71,6 +77,19 @@ public class SurferController : MonoBehaviour
             jumpPressed = false;
         }
     }
+    void ApplyBetterJumpPhysics()
+    {
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+        }
+        else if (rb.velocity.y > 0 && !jumpHeld)
+        {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        }
+    }
+
+
 
     // === INPUT SYSTEM EVENTS ===
 
@@ -84,6 +103,14 @@ public class SurferController : MonoBehaviour
         if (context.started)
         {
             jumpPressed = true;
+            jumpHeld = true;
+        }
+
+        if (context.canceled)
+        {
+            jumpHeld = false;
         }
     }
+
+
 }

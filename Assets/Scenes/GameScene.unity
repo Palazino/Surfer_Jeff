@@ -456,9 +456,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  jumpForce: 12
+  jumpForce: 15
   jumpHoldForce: 20
   maxJumpHoldTime: 0.2
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
 --- !u!1 &1405452763
 GameObject:
   m_ObjectHideFlags: 0
