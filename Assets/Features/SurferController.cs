@@ -76,6 +76,11 @@ public class SurferController : MonoBehaviour
 
             jumpPressed = false;
         }
+        else if (!isGrounded)
+        {
+            jumpPressed = false;
+        }
+
     }
     void ApplyBetterJumpPhysics()
     {
