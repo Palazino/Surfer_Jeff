@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 1950d01b5599c4e44b27c1aaeba94183, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   maxJumpHeight: 4
   minJumpFrequency: 1.5
   maxJumpFrequency: 3
-  jumpDuration: 1
+  jumpDuration: 2
 --- !u!95 &3155095755743453680
 Animator:
   serializedVersion: 5
