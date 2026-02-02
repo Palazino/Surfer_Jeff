@@ -29,6 +29,8 @@ public class SurferController : MonoBehaviour
     [SerializeField] private Sprite idleSprite;
     [SerializeField] private Sprite jumpSprite;
     [SerializeField] private float invertDuration = 2f;
+    [SerializeField] private Sprite koSprite;
+
 
     private bool isInverted = false;
     private float invertTimer;
@@ -176,6 +178,7 @@ public class SurferController : MonoBehaviour
         if (currentLives <= 0)
         {
             isDead = true;
+            spriteRenderer.sprite = koSprite;
             fishSpawner.StopSpawning();
             Debug.Log("GAME OVER");
         }
@@ -208,11 +211,14 @@ public class SurferController : MonoBehaviour
     }
     void UpdateSprite()
     {
+        if (isDead) return;
+
         if (isGrounded)
             spriteRenderer.sprite = idleSprite;
         else
             spriteRenderer.sprite = jumpSprite;
     }
+
     void ActivateInvert()
     {
         isInverted = true;
