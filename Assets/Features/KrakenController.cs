@@ -13,7 +13,9 @@ public class KrakenController : MonoBehaviour
     [SerializeField] private float strikeDuration = 0.5f;
     [SerializeField] private GameObject hitboxLeft;
     [SerializeField] private GameObject hitboxRight;
-
+    [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private float shakeDuration = 0.15f;
+    [SerializeField] private float shakeMagnitude = 0.2f;
 
     private bool attackLeftNext = true;
 
@@ -43,6 +45,7 @@ public class KrakenController : MonoBehaviour
         tentacleLeft.sprite = leftDown;
 
         hitboxLeft.SetActive(true);
+        cameraShake.Shake(shakeDuration, shakeMagnitude);
 
         yield return new WaitForSeconds(strikeDuration);
 
@@ -60,6 +63,7 @@ public class KrakenController : MonoBehaviour
         tentacleRight.sprite = rightDown;
 
         hitboxRight.SetActive(true);
+        cameraShake.Shake(shakeDuration, shakeMagnitude);
 
         yield return new WaitForSeconds(strikeDuration);
 
