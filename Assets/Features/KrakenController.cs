@@ -39,19 +39,25 @@ public class KrakenController : MonoBehaviour
 
     IEnumerator StrikeLeft()
     {
+        tentacleLeft.sortingOrder = 1;
         tentacleLeft.sprite = leftDown;
 
         yield return new WaitForSeconds(strikeDuration);
 
         tentacleLeft.sprite = leftHigh;
+        tentacleLeft.sortingOrder = -1;
     }
+
 
     IEnumerator StrikeRight()
     {
+        tentacleRight.sortingOrder = 1;
         tentacleRight.sprite = rightDown;
 
         yield return new WaitForSeconds(strikeDuration);
 
         tentacleRight.sprite = rightHigh;
+        tentacleRight.sortingOrder = -1;
     }
+
 }
