@@ -1,6 +1,10 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+using UnityEngine.SceneManagement;
+
+
 
 public class SurferController : MonoBehaviour
 {
@@ -21,6 +25,7 @@ public class SurferController : MonoBehaviour
     [SerializeField] private FishSpawner fishSpawner;
     [SerializeField] private float knockbackForce = 5f;
     [SerializeField] private float hitStunDuration = 0.2f;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     private float hitStunTimer;
     private SpriteRenderer spriteRenderer;
@@ -33,6 +38,8 @@ public class SurferController : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpPressed;
     private bool jumpHeld;
+    private float survivalTime;
+
 
 
     void Awake()
@@ -52,7 +59,12 @@ public class SurferController : MonoBehaviour
             hitStunTimer -= Time.deltaTime;
             return;
         }
+
+        UpdateGameOverInput();
         if (isDead) return;
+        survivalTime += Time.deltaTime;
+        scoreText.text = "Score : " + Mathf.FloorToInt(survivalTime);
+
 
         CheckGround();
         HandleMovement();
@@ -163,7 +175,13 @@ public class SurferController : MonoBehaviour
 
         spriteRenderer.color = Color.white;
     }
-
+    void UpdateGameOverInput()
+    {
+        if (isDead && Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene("MainMenuScene");
+        }
+    }
 
 
     // === INPUT SYSTEM EVENTS ===
