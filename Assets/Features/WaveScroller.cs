@@ -10,7 +10,7 @@ public class WaveScroller : MonoBehaviour
     private float startY;
 
 
-    private float spriteWidth;
+    public float spriteWidth;
     private Camera cam;
 
     void Start()
