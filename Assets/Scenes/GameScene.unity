@@ -1037,6 +1037,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1216052049}
   - component: {fileID: 1216052048}
+  - component: {fileID: 1216052050}
   m_Layer: 0
   m_Name: Kraken
   m_TagString: Untagged
@@ -1113,6 +1114,26 @@ Transform:
   - {fileID: 1042425076}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1216052050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216052047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8ca388e2dc26a429634b142ed622c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tentacleLeft: {fileID: 1220888531}
+  tentacleRight: {fileID: 1042425077}
+  leftHigh: {fileID: 21300000, guid: e8dc06b50467e0741bfd83bc085c48c0, type: 3}
+  leftDown: {fileID: 21300000, guid: d3376356448220c41ae8904152a778e0, type: 3}
+  rightHigh: {fileID: 21300000, guid: f444a9cf39e675340bb86d7db83068fe, type: 3}
+  rightDown: {fileID: 21300000, guid: 6bddc792628390f4bba549f4c1551ab2, type: 3}
+  attackDelay: 2
+  strikeDuration: 0.5
 --- !u!1 &1220888529
 GameObject:
   m_ObjectHideFlags: 0
