@@ -13,8 +13,13 @@ public class SurferController : MonoBehaviour
     [SerializeField] private float maxJumpHoldTime = 0.2f;
     [SerializeField] private float fallMultiplier = 2.5f;
     [SerializeField] private float lowJumpMultiplier = 2f;
+    [SerializeField] private int maxLives = 4;
+    [SerializeField] private SpriteRenderer[] lifeIcons;
+    [SerializeField] private Sprite fullHeart;
+    [SerializeField] private Sprite emptyHeart;
 
 
+    private int currentLives;
     private float jumpHoldTimer;
     private bool isJumping;
     private bool isGrounded;
@@ -27,6 +32,10 @@ public class SurferController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        currentLives = maxLives;
+        UpdateLivesUI();
+
+
     }
 
     void FixedUpdate()
@@ -93,6 +102,38 @@ public class SurferController : MonoBehaviour
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Obstacle"))
+        {
+            TakeDamage();
+            Destroy(collision.gameObject);
+        }
+
+    }
+    void TakeDamage()
+    {
+        currentLives--;
+        UpdateLivesUI();
+
+        Debug.Log("Vie restante : " + currentLives);
+
+        if (currentLives <= 0)
+        {
+            Debug.Log("GAME OVER");
+        }
+    }
+    void UpdateLivesUI()
+    {
+        for (int i = 0; i < lifeIcons.Length; i++)
+        {
+            if (i < currentLives)
+                lifeIcons[i].sprite = fullHeart;
+            else
+                lifeIcons[i].sprite = emptyHeart;
+        }
+    }
+
 
 
 
