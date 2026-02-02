@@ -28,6 +28,11 @@ public class SurferController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Sprite idleSprite;
     [SerializeField] private Sprite jumpSprite;
+    [SerializeField] private float invertDuration = 2f;
+
+    private bool isInverted = false;
+    private float invertTimer;
+
 
 
     private float hitStunTimer;
@@ -65,6 +70,7 @@ public class SurferController : MonoBehaviour
 
         UpdateGameOverInput();
         if (isDead) return;
+        HandleInvert();
         UpdateSprite();
         survivalTime += Time.deltaTime;
         scoreText.text = "Score : " + Mathf.FloorToInt(survivalTime);
@@ -81,7 +87,10 @@ public class SurferController : MonoBehaviour
         float moveSpeed = 8f;
 
         Vector2 velocity = rb.velocity;
-        velocity.x = moveInput.x * moveSpeed;
+
+        float move = isInverted ? -moveInput.x : moveInput.x;
+        velocity.x = move * moveSpeed;
+
         rb.velocity = velocity;
 
         // Clamp horizontal
@@ -89,6 +98,7 @@ public class SurferController : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
         transform.position = pos;
     }
+
     void CheckGround()
     {
         isGrounded = Physics2D.OverlapCircle(
@@ -143,8 +153,14 @@ public class SurferController : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
-    }
 
+        if (collision.CompareTag("Bird"))
+        {
+            ActivateInvert();
+            Destroy(collision.gameObject);
+        }
+
+    }
     void TakeDamage()
     {
         hitStunTimer = hitStunDuration;
@@ -196,6 +212,25 @@ public class SurferController : MonoBehaviour
             spriteRenderer.sprite = idleSprite;
         else
             spriteRenderer.sprite = jumpSprite;
+    }
+    void ActivateInvert()
+    {
+        isInverted = true;
+        invertTimer = invertDuration;
+
+        spriteRenderer.color = Color.blue;
+    }
+    void HandleInvert()
+    {
+        if (!isInverted) return;
+
+        invertTimer -= Time.deltaTime;
+
+        if (invertTimer <= 0f)
+        {
+            isInverted = false;
+            spriteRenderer.color = Color.white;
+        }
     }
 
 
