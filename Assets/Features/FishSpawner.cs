@@ -11,6 +11,8 @@ public class FishSpawner : MonoBehaviour
     private float difficultyTimer;
     private float currentSpawnInterval;
     private float timer;
+    private bool isStopped = false;
+
 
     void Start()
     {
@@ -19,6 +21,7 @@ public class FishSpawner : MonoBehaviour
 
     void Update()
     {
+        if (isStopped) return;
         difficultyTimer += Time.deltaTime;
         timer += Time.deltaTime;
 
@@ -38,7 +41,6 @@ public class FishSpawner : MonoBehaviour
         }
 
     }
-
     void SpawnFish()
     {
         if (spawnPoints.Length == 0) return;
@@ -48,4 +50,9 @@ public class FishSpawner : MonoBehaviour
 
         Instantiate(fishPrefab, chosenSpawn.position, Quaternion.identity);
     }
+    public void StopSpawning()
+    {
+        isStopped = true;
+    }
+
 }

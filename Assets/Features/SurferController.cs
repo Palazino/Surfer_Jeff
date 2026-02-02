@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,8 +18,13 @@ public class SurferController : MonoBehaviour
     [SerializeField] private SpriteRenderer[] lifeIcons;
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite emptyHeart;
+    [SerializeField] private FishSpawner fishSpawner;
+    [SerializeField] private float knockbackForce = 5f;
+    [SerializeField] private float hitStunDuration = 0.2f;
 
-
+    private float hitStunTimer;
+    private SpriteRenderer spriteRenderer;
+    private bool isDead = false;
     private int currentLives;
     private float jumpHoldTimer;
     private bool isJumping;
@@ -31,6 +37,7 @@ public class SurferController : MonoBehaviour
 
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();     
         rb = GetComponent<Rigidbody2D>();
         currentLives = maxLives;
         UpdateLivesUI();
@@ -40,6 +47,13 @@ public class SurferController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (hitStunTimer > 0)
+        {
+            hitStunTimer -= Time.deltaTime;
+            return;
+        }
+        if (isDead) return;
+
         CheckGround();
         HandleMovement();
         HandleJump();
@@ -113,15 +127,23 @@ public class SurferController : MonoBehaviour
     }
     void TakeDamage()
     {
+        hitStunTimer = hitStunDuration;
         currentLives--;
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+        rb.AddForce(new Vector2(-knockbackForce, 2f), ForceMode2D.Impulse);
+
+        StartCoroutine(FlashRed());
         UpdateLivesUI();
 
         Debug.Log("Vie restante : " + currentLives);
 
         if (currentLives <= 0)
         {
+            isDead = true;
+            fishSpawner.StopSpawning();
             Debug.Log("GAME OVER");
         }
+
     }
     void UpdateLivesUI()
     {
@@ -133,7 +155,14 @@ public class SurferController : MonoBehaviour
                 lifeIcons[i].sprite = emptyHeart;
         }
     }
+    IEnumerator FlashRed()
+    {
+        spriteRenderer.color = Color.red;
 
+        yield return new WaitForSeconds(0.1f);
+
+        spriteRenderer.color = Color.white;
+    }
 
 
 

@@ -1227,6 +1227,9 @@ MonoBehaviour:
   - {fileID: 1784361176}
   fullHeart: {fileID: 21300000, guid: 5bc0fb6217d05204d8b9bcc835610401, type: 3}
   emptyHeart: {fileID: 21300000, guid: 9b02afe012fe7334d8082de42e04f929, type: 3}
+  fishSpawner: {fileID: 913328055}
+  knockbackForce: 10
+  hitStunDuration: 0.2
 --- !u!1 &1280372225
 GameObject:
   m_ObjectHideFlags: 0
