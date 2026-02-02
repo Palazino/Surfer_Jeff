@@ -65,7 +65,6 @@ public class SurferController : MonoBehaviour
         survivalTime += Time.deltaTime;
         scoreText.text = "Score : " + Mathf.FloorToInt(survivalTime);
 
-
         CheckGround();
         HandleMovement();
         HandleJump();
@@ -133,10 +132,15 @@ public class SurferController : MonoBehaviour
         if (collision.CompareTag("Obstacle"))
         {
             TakeDamage();
-            Destroy(collision.gameObject);
-        }
 
+            // Détruire uniquement si c’est un poisson
+            if (collision.GetComponent<FishMovement>() != null)
+            {
+                Destroy(collision.gameObject);
+            }
+        }
     }
+
     void TakeDamage()
     {
         hitStunTimer = hitStunDuration;
