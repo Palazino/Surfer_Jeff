@@ -26,6 +26,9 @@ public class SurferController : MonoBehaviour
     [SerializeField] private float knockbackForce = 5f;
     [SerializeField] private float hitStunDuration = 0.2f;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Sprite idleSprite;
+    [SerializeField] private Sprite jumpSprite;
+
 
     private float hitStunTimer;
     private SpriteRenderer spriteRenderer;
@@ -62,6 +65,7 @@ public class SurferController : MonoBehaviour
 
         UpdateGameOverInput();
         if (isDead) return;
+        UpdateSprite();
         survivalTime += Time.deltaTime;
         scoreText.text = "Score : " + Mathf.FloorToInt(survivalTime);
 
@@ -185,6 +189,13 @@ public class SurferController : MonoBehaviour
         {
             SceneManager.LoadScene("MainMenuScene");
         }
+    }
+    void UpdateSprite()
+    {
+        if (isGrounded)
+            spriteRenderer.sprite = idleSprite;
+        else
+            spriteRenderer.sprite = jumpSprite;
     }
 
 
