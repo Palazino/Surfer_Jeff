@@ -30,13 +30,13 @@ public class SurferController : MonoBehaviour
     [SerializeField] private Sprite jumpSprite;
     [SerializeField] private float invertDuration = 2f;
     [SerializeField] private Sprite koSprite;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip hitClip;
+    [SerializeField] private AudioClip deathClip;
 
-
+    private AudioSource audioSource;
     private bool isInverted = false;
     private float invertTimer;
-
-
-
     private float hitStunTimer;
     private SpriteRenderer spriteRenderer;
     private bool isDead = false;
@@ -54,6 +54,7 @@ public class SurferController : MonoBehaviour
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();     
         rb = GetComponent<Rigidbody2D>();
         currentLives = maxLives;
@@ -123,6 +124,8 @@ public class SurferController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, 0f);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            audioSource.PlayOneShot(jumpClip);
+
 
             jumpPressed = false;
         }
@@ -167,6 +170,7 @@ public class SurferController : MonoBehaviour
     {
         hitStunTimer = hitStunDuration;
         currentLives--;
+        audioSource.PlayOneShot(hitClip);
         rb.velocity = new Vector2(0f, rb.velocity.y);
         rb.AddForce(new Vector2(-knockbackForce, 2f), ForceMode2D.Impulse);
 
