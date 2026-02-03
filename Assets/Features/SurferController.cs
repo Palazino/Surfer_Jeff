@@ -182,6 +182,7 @@ public class SurferController : MonoBehaviour
         if (currentLives <= 0)
         {
             isDead = true;
+            audioSource.PlayOneShot(deathClip);
             spriteRenderer.sprite = koSprite;
             fishSpawner.StopSpawning();
             Debug.Log("GAME OVER");
