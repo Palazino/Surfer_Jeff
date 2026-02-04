@@ -17,7 +17,7 @@ public class KrakenController : MonoBehaviour
     [SerializeField] private float shakeDuration = 0.15f;
     [SerializeField] private float shakeMagnitude = 0.2f;
     [SerializeField] private AudioClip KrakenAttack;
- 
+    
     private bool attackLeftNext = true;
     private AudioSource audioSource;
 
