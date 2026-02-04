@@ -10,7 +10,7 @@ public class BirdMovement : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(BirdFly);
+        audioSource.PlayOneShot(BirdFly);   
     }
 
     void Update()

@@ -33,6 +33,8 @@ public class SurferController : MonoBehaviour
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip hitClip;
     [SerializeField] private AudioClip deathClip;
+    [SerializeField] private GameObject gameOverText;
+
 
     private AudioSource audioSource;
     private bool isInverted = false;
@@ -183,10 +185,13 @@ public class SurferController : MonoBehaviour
         {
             isDead = true;
             audioSource.PlayOneShot(deathClip);
+
             spriteRenderer.sprite = koSprite;
             fishSpawner.StopSpawning();
-            Debug.Log("GAME OVER");
+
+            gameOverText.SetActive(true);
         }
+
 
     }
     void UpdateLivesUI()
